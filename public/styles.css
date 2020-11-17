@@ -1,0 +1,45 @@
+body{
+    background-color:rgb(113, 106, 219);
+}
+#title{
+    color: lightskyblue;
+}
+h3{
+    color: lightskyblue;
+}
+p{
+    color: lightblue;
+}
+.graphic{
+    color: lightsteelblue;
+}
+#center-card{
+    width: 30rem;
+    display: block;
+    margin: auto;
+    background-color:rgba(0, 4, 29, 0.808);
+ 
+}
+label{
+    color: mediumaquamarine;
+}
+#center-row{
+    width: 30rem;
+    display: block;
+    margin: auto;
+}
+#row{
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+#background-card{
+    background-color:rgba(0, 4, 29, 0.808) ;
+}
+
+#actualTemp{
+    color: greenyellow;
+}
+#distance{
+    color: greenyellow;
+}
