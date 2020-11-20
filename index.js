@@ -12,15 +12,18 @@ http.listen(app.get('port'),()=>{
   console.log('Web server listen on port',app.get('port'));
 });
 //creando el servidor mqtt
-const aedes = require('aedes')
+const aedes = require('aedes')()
 const server = require('net').createServer(aedes.handle)
 const port = 1883
 server.listen(port,function(){
   console.log('MQTT server listen on port',port);
 })
 //creando el cliente que servira de publicador y subscriptor
+const mqtt = require('mqtt')
+const client = mqtt.connect('mqtt://localhost:1883')
 client.on('connect',()=>{
   client.subscribe('temperature')//suscribiendo nuestro cliente a los datos de temperatura de Arduino
+  console.log('A client was subscribed!')
 })
 
 //websocket
@@ -63,16 +66,21 @@ io.on('connection',(socket)=>{
   socket.on('deactivateDoor',(data)=>{
     console.log(data)
   })
+  console.log('cliente connected led!');
   socket.on('activateLed1',(data)=>{
+    client.publish('led1','1')
     console.log(data)
   })
   socket.on('deactivateLed1',(data)=>{
+    client.publish('led1','0')
     console.log(data)
   })
   socket.on('activateLed2',(data)=>{
+    client.publish('led2','1')
     console.log(data)
   })
   socket.on('deactivateLed2',(data)=>{
+    client.publish('led2','0')
     console.log(data)
-  })
+  }) 
 })
