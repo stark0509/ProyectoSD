@@ -23,7 +23,9 @@ const mqtt = require('mqtt')
 const client = mqtt.connect('mqtt://localhost:1883')
 client.on('connect',()=>{
   client.subscribe('temperature')//suscribiendo nuestro cliente a los datos de temperatura de Arduino
-  console.log('A client was subscribed!')
+  console.log('A client MQTT was subscribed to temperature data!')
+  client.subscribe('distance')//suscribiendo nuestro cliente a los datos de temperatura de Arduino
+  console.log('A client MQTT was subscribed to distance data!')
 })
 
 //websocket
@@ -34,39 +36,45 @@ io.on('connection',(socket)=>{
     data = parseFloat(message);
     if(topic==="temperature"){
       socket.emit('temperature',data)
-      console.log("data was sent! ",data)
+      console.log("temperature was sent to web client! ",data)
+    }else if(topic==='distance'){
+      socket.emit('distance',data)
+      console.log("distance was sent to web client! ",data)
     }
   })
-  let a;
-  setInterval(()=>{
-    a=(Math.random()*20)+20;
-    socket.emit('distance',a)
-  },2000);
+
   socket.on('enableAutomaticFan',(data)=>{
+    client.publish('fanControl','1')
     console.log(data)
   })
   socket.on('disableAutomaticFan',(data)=>{
+    client.publish('fanControl','0')
     console.log(data)
   })
   socket.on('activateFan',(data)=>{
+    client.publish('fanState','1')
     console.log(data)
   })
   socket.on('deactivateFan',(data)=>{
+    client.publish('fanState','0')
     console.log(data)
   })
   socket.on('enableAutomaticDoor',(data)=>{
+    client.publish('doorControl','1')//habilitar control automatico
     console.log(data)
   })
   socket.on('disableAutomaticDoor',(data)=>{
+    client.publish('doorControl','0')//deshabilitar control automatico
     console.log(data)
   })
   socket.on('activateDoor',(data)=>{
+    client.publish('doorState','1')//abrir la puerta
     console.log(data)
   })
   socket.on('deactivateDoor',(data)=>{
+    client.publish('doorState','0')//cerrar la puerta
     console.log(data)
   })
-  console.log('cliente connected led!');
   socket.on('activateLed1',(data)=>{
     client.publish('led1','1')
     console.log(data)
