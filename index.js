@@ -23,23 +23,23 @@ const mqtt = require('mqtt')
 const client = mqtt.connect('mqtt://localhost:1883')
 client.on('connect',()=>{
   client.subscribe('temperature')//suscribiendo nuestro cliente a los datos de temperatura de Arduino
-  console.log('A client MQTT was subscribed to temperature data!')
+  console.log('cliente MQTT fue suscrito a los datos de temperatura!')
   client.subscribe('distance')//suscribiendo nuestro cliente a los datos de temperatura de Arduino
-  console.log('A client MQTT was subscribed to distance data!')
+  console.log('cliente MQTT fue suscrito a los datos de distancia!')
 })
 
 //websocket
 io.on('connection',(socket)=>{
-  console.log('A new user connected',socket.id);
+  console.log('Nuevo usuario conectado con el id: ',socket.id);
   client.on('message',(topic,message)=>{//configurando el cliente para que reciba la Temp y la envia al navegador
     message = message.toString();
     data = parseFloat(message);
     if(topic==="temperature"){
       socket.emit('temperature',data)
-      console.log("temperature was sent to web client! ",data)
+      console.log("temperature fue enviada al cliente web! ",data)
     }else if(topic==='distance'){
       socket.emit('distance',data)
-      console.log("distance was sent to web client! ",data)
+      console.log("distancia fue enviada al cliente web! ",data)
     }
   })
 
