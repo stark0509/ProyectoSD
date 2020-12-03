@@ -12,12 +12,12 @@ http.listen(app.get('port'),()=>{
   console.log('Web server listen on port',app.get('port'));
 });
 //creando el servidor mqtt
-const aedes = require('aedes')()
-const server = require('net').createServer(aedes.handle)
-const port = 1883
-server.listen(port,function(){
-  console.log('MQTT server listen on port',port);
-})
+//const aedes = require('aedes')()
+//const server = require('net').createServer(aedes.handle)
+//const port = 1883
+//server.listen(port,function(){
+  //console.log('MQTT server listen on port',port);
+//})
 //creando el cliente que servira de publicador y subscriptor
 const mqtt = require('mqtt')
 const options = {
